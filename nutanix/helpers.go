@@ -15,7 +15,7 @@ func getMetadataAttributes(d *schema.ResourceData, metadata *v3.Metadata, kind s
 	metadata.Kind = utils.StringPtr(kind)
 
 	if v, ok := d.GetOk("categories"); ok {
-		catl := v.(map[string]interface{})
+		catl := v.([]interface{})
 		metadata.Categories = expandCategories(catl)
 	} else {
 		metadata.Categories = nil
@@ -47,7 +47,7 @@ func getMetadataAttributes(d *schema.ResourceData, metadata *v3.Metadata, kind s
 	return nil
 }
 
-func setRSEntityMetadata(v *v3.Metadata) (map[string]interface{}, map[string]interface{}) {
+func setRSEntityMetadata(v *v3.Metadata) (map[string]interface{}, []interface{}) {
 	metadata := make(map[string]interface{})
 	metadata["last_update_time"] = utils.TimeValue(v.LastUpdateTime).String()
 	metadata["uuid"] = utils.StringValue(v.UUID)
@@ -56,15 +56,36 @@ func setRSEntityMetadata(v *v3.Metadata) (map[string]interface{}, map[string]int
 	metadata["spec_hash"] = utils.StringValue(v.SpecHash)
 	metadata["name"] = utils.StringValue(v.Name)
 
-	c := make(map[string]interface{}, len(v.Categories))
+	c := make([]interface{}, len(v.Categories))
 	if v.Categories != nil {
-		for name, values := range v.Categories {
-			c[name] = values
+		idx := 0
+		for name, value := range v.Categories {
+			c[idx] = map[string]interface{}{"name": name, "value": value}
+			idx = idx + 1
 		}
 	}
 
 	return metadata, c
 }
+
+// func setRSEntityMetadata(v *v3.Metadata) (map[string]interface{}, map[string]interface{}) {
+// 	metadata := make(map[string]interface{})
+// 	metadata["last_update_time"] = utils.TimeValue(v.LastUpdateTime).String()
+// 	metadata["uuid"] = utils.StringValue(v.UUID)
+// 	metadata["creation_time"] = utils.TimeValue(v.CreationTime).String()
+// 	metadata["spec_version"] = strconv.Itoa(int(utils.Int64Value(v.SpecVersion)))
+// 	metadata["spec_hash"] = utils.StringValue(v.SpecHash)
+// 	metadata["name"] = utils.StringValue(v.Name)
+
+// 	c := make(map[string]interface{}, len(v.Categories))
+// 	if v.Categories != nil {
+// 		for name, values := range v.Categories {
+// 			c[name] = values
+// 		}
+// 	}
+
+// 	return metadata, c
+// }
 
 func flattenReferenceValues(r *v3.Reference) map[string]interface{} {
 	reference := make(map[string]interface{})

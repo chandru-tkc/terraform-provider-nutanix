@@ -65,8 +65,7 @@ require (
 	github.com/zclconf/go-cty v0.0.0-20180718220526-02bd58e97b57 // indirect
 	golang.org/x/crypto v0.0.0-20190404164418-38d8ce5564a5 // indirect
 	golang.org/x/net v0.0.0-20190403144856-b630fd6fe46b // indirect
-	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6 // indirect
-	golang.org/x/tools v0.0.0-20190404132500-923d25813098 // indirect
+	golang.org/x/tools v0.0.0-20190614205625-5aca471b1d59 // indirect
 	google.golang.org/genproto v0.0.0-20180808183934-383e8b2c3b9e // indirect
 	google.golang.org/grpc v1.14.0 // indirect
 	mvdan.cc/unparam v0.0.0-20190310220240-1b9ccfa71afe // indirect

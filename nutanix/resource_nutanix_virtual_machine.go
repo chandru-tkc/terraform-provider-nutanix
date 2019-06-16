@@ -1013,7 +1013,7 @@ func resourceNutanixVirtualMachineUpdate(d *schema.ResourceData, meta interface{
 	}
 
 	if d.HasChange("categories") {
-		catl := d.Get("categories").(map[string]interface{})
+		catl := d.Get("categories").([]interface{})
 		metadata.Categories = expandCategories(catl)
 
 	}

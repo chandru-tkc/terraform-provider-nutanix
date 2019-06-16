@@ -457,7 +457,7 @@ func resourceNutanixImageUpdate(d *schema.ResourceData, meta interface{}) error 
 	}
 
 	if d.HasChange("categories") {
-		catl := d.Get("categories").(map[string]interface{})
+		catl := d.Get("categories").([]interface{})
 		metadata.Categories = expandCategories(catl)
 	}
 
